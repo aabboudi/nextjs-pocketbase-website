@@ -5,54 +5,46 @@ export const siteConfig = {
   description: "Make beautiful websites regardless of your design experience.",
   navItems: [
     {
-      label: "Home",
-      href: "/",
+      label: "Saison 23/24",
+      href: "/saison2324",
     },
     {
-      label: "Docs",
-      href: "/docs",
+      label: "L'Orchestre",
+      href: "/orchestre",
     },
     {
-      label: "Pricing",
-      href: "/pricing",
+      label: "Partenaires",
+      href: "/partenaires",
     },
     {
-      label: "Blog",
-      href: "/blog",
+      label: "En Image",
+      href: "/en-image",
     },
     {
-      label: "About",
-      href: "/about",
+      label: "Contact",
+      href: "/contact",
     },
   ],
   navMenuItems: [
     {
-      label: "Profile",
-      href: "/profile",
+      label: "Saison 23/24",
+      href: "/saison2324",
     },
     {
-      label: "Dashboard",
-      href: "/dashboard",
+      label: "L'Orchestre",
+      href: "/orchestre",
     },
     {
-      label: "Projects",
-      href: "/projects",
+      label: "Partenaires",
+      href: "/partenaires",
     },
     {
-      label: "Team",
-      href: "/team",
+      label: "En Image",
+      href: "/en-image",
     },
     {
-      label: "Calendar",
-      href: "/calendar",
-    },
-    {
-      label: "Settings",
-      href: "/settings",
-    },
-    {
-      label: "Help & Feedback",
-      href: "/help-feedback",
+      label: "Contact",
+      href: "/contact",
     },
     {
       label: "Logout",
