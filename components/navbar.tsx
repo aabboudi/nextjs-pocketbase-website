@@ -51,7 +51,7 @@ export const Navbar = () => {
   );
 
   return (
-    <NextUINavbar maxWidth="xl" position="static" className="fixed">
+    <NextUINavbar maxWidth="xl" position="static" className="fixed shadow-lg">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
 
         {/* BRAND */}
@@ -63,7 +63,7 @@ export const Navbar = () => {
         </NavbarBrand>
 
         {/* Links */}
-        <div className="hidden lg:flex gap-4 justify-start ml-2">
+        <div className="hidden md:flex gap-4 justify-start ml-2">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
               <NextLink
@@ -81,13 +81,13 @@ export const Navbar = () => {
         </div>
       </NavbarContent>
 
-      {/* LINKS ON LG SCREENS */}
+      {/* ICONS ON LG SCREENS */}
       <NavbarContent
-        className="hidden sm:flex basis-1/5 sm:basis-full"
+        className="hidden md:flex basis-1/5 md:basis-full"
         justify="end"
       >
-        <NavbarItem className="hidden sm:flex gap-2">
-          <Link isExternal href={siteConfig.links.twitter}>
+        <NavbarItem className="hidden md:flex gap-2">
+          {/* <Link isExternal href={siteConfig.links.twitter}>
             <TwitterIcon className="text-default-500" />
           </Link>
           <Link isExternal href={siteConfig.links.discord}>
@@ -95,16 +95,16 @@ export const Navbar = () => {
           </Link>
           <Link isExternal href={siteConfig.links.github}>
             <GithubIcon className="text-default-500" />
-          </Link>
+          </Link> */}
           <ThemeSwitch />
         </NavbarItem>
       </NavbarContent>
 
       {/* LINKS ON SM SCREENS */}
-      <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-        <Link isExternal href={siteConfig.links.github}>
+      <NavbarContent className="md:hidden basis-1 pl-4" justify="end">
+        {/* <Link isExternal href={siteConfig.links.github}>
           <GithubIcon className="text-default-500" />
-        </Link>
+        </Link> */}
         <ThemeSwitch />
         <NavbarMenuToggle />
       </NavbarContent>

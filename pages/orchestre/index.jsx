@@ -6,7 +6,7 @@ import {Card, CardBody} from "@nextui-org/card";
 export default function DocsPage() {
   return (
     <DefaultLayout>
-      <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
+      <div className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
         {/* <div className="inline-block max-w-lg text-center justify-center">
           <h1 className={title()}>Orchestre</h1>
         </div> */}
@@ -19,7 +19,7 @@ export default function DocsPage() {
             src="/opm-histoire-0.webp"
           />
         </div>
-        </section>
+        </div>
         <section className="flex flex-col lg:flex-row items-center justify-center gap-4 py-8 md:py-10 w-full">
           {/* Title and text on the left for lg screens, full width on small screens */}
           <div className="lg:w-1/2 w-full text-center lg:text-left p-4">

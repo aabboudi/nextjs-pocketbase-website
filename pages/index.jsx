@@ -27,23 +27,27 @@ export default function IndexPage() {
           </h4>
         </div>
       </section> */}
-      <section className="relative h-96 lg:h-3/4 w-full">
-        <Image
-          src="/opm-inaction.webp"
-          alt="Background Image"
-          layout="fill"
-          objectFit="cover"
-          quality={100}
-          className="absolute inset-0 z-0 rounded-large"
-        />
+      <section className="relative h-screen w-full">
+        <div className="flex flex-col items-center justify-center">
+          <Image
+            isBlurred
+            src="/opm-inaction.webp"
+            alt="Background Image"
+            layout="fill"
+            objectFit="cover"
+            quality={100}
+            className="absolute inset-0 z-0 rounded-large"
+          />
+        </div>
         <div className="absolute inset-0 bg-black opacity-50 z-10 rounded-large"></div>
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white p-8">
           <h1 className="text-4xl md:text-6xl font-bold">Your Large Text Here</h1>
         </div>
       </section>
+
       <section className="py-8">
         <div className="flex justify-center py-8"><h1 className={title()}>Nos chefs invités</h1></div>
-        <div className="flex flex-wrap items-center justify-center gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-center justify-center">
           {[
             { name: "Wolfgang Doerner", country: "Autriche", src: "/conductors/wolfgang_doerner_austria.webp" },
             { name: "Ivan Yohan",       country: "Indonésie",       src: "/conductors/ivan_yohan_indonesia.webp" },
@@ -54,7 +58,7 @@ export default function IndexPage() {
             <Card
             isFooterBlurred
             radius="lg"
-            className="w-full md:w-full lg:w-[calc(20%_-_1rem)] flex flex-col items-center border-none"
+            className="w-full flex flex-col items-center border-none"
           >
             <CardHeader className="absolute z-10 top-1 flex-col !items-start">
               <h4 className="text-white uppercase font-bold text-large">{composer.name}</h4>
