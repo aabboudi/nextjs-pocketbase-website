@@ -61,9 +61,11 @@ export const Navbar = () => {
             <p className="font-bold text-inherit">OPM</p>
           </NextLink>
         </NavbarBrand>
+      </NavbarContent>
 
-        {/* Links */}
-        <div className="hidden md:flex gap-4 justify-start ml-2">
+      {/* ICONS ON LG SCREENS */}
+      <NavbarContent className="hidden md:flex basis-1/5 md:basis-full" justify="end">
+        <div className="md:flex gap-4 justify-start mr-2">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
               <NextLink
@@ -74,37 +76,18 @@ export const Navbar = () => {
                 color="foreground"
                 href={item.href}
               >
-                {item.label}
-              </NextLink>
-            </NavbarItem>
+              {item.label}
+            </NextLink>
+          </NavbarItem>
           ))}
         </div>
-      </NavbarContent>
-
-      {/* ICONS ON LG SCREENS */}
-      <NavbarContent
-        className="hidden md:flex basis-1/5 md:basis-full"
-        justify="end"
-      >
         <NavbarItem className="hidden md:flex gap-2">
-          {/* <Link isExternal href={siteConfig.links.twitter}>
-            <TwitterIcon className="text-default-500" />
-          </Link>
-          <Link isExternal href={siteConfig.links.discord}>
-            <DiscordIcon className="text-default-500" />
-          </Link>
-          <Link isExternal href={siteConfig.links.github}>
-            <GithubIcon className="text-default-500" />
-          </Link> */}
           <ThemeSwitch />
         </NavbarItem>
       </NavbarContent>
 
       {/* LINKS ON SM SCREENS */}
       <NavbarContent className="md:hidden basis-1 pl-4" justify="end">
-        {/* <Link isExternal href={siteConfig.links.github}>
-          <GithubIcon className="text-default-500" />
-        </Link> */}
         <ThemeSwitch />
         <NavbarMenuToggle />
       </NavbarContent>
@@ -112,7 +95,7 @@ export const Navbar = () => {
       {/* HAMBURGER MENU */}
       <NavbarMenu>
         {searchInput}
-        <div className="mx-4 mt-2 flex flex-col gap-2">
+        <div className="mx-4 mt-2 flex flex-col text-center gap-2">
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link

@@ -13,7 +13,7 @@ export const Footer = () => {
         <div className="w-full lg:w-1/6 mb-6 lg:mb-0">
           <ul>
             <li className="mb-2">
-              <Link href="#" className="text-white hover:text-gray-400">Link 1</Link>
+              <Link href="#" className="text-white hover:text-gray-400">Conditions générales de vente</Link>
             </li>
             <li className="mb-2">
               <Link href="#" className="text-white hover:text-gray-400">Link 2</Link>
@@ -40,16 +40,5 @@ export const Footer = () => {
       </div>
 
     </footer>
-    // <footer className="w-full flex items-center justify-center py-3">
-    //   <Link
-    //     isExternal
-    //     className="flex items-center gap-1 text-current"
-    //     href="https://nextui-docs-v2.vercel.app?utm_source=next-pages-template"
-    //     title="nextui.org homepage"
-    //   >
-    //     <span className="text-default-600">Powered by</span>
-    //     <p className="text-primary">NextUI</p>
-    //   </Link>
-    // </footer>
   );
 };

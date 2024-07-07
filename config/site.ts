@@ -51,6 +51,12 @@ export const siteConfig = {
       href: "/logout",
     },
   ],
+  footerItems: [
+    {
+      label: "Conditions Générales de Vente",
+      href: "/conditions_generales_de_vente",
+    },
+  ],
   links: {
     github: "https://github.com/nextui-org/nextui",
     twitter: "https://twitter.com/getnextui",
