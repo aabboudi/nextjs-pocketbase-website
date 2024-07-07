@@ -3,43 +3,39 @@ import DefaultLayout from "@/layouts/default";
 import { Card, CardHeader, CardBody } from "@nextui-org/card";
 import Image from "next/image";
 import Link from 'next/link';
-import { useRouter } from "next/router";
+import dbconn from "../api/dbconn";
 
-export default function SeasonPage() {
-  const { season } = useRouter().query;
+export default function SeasonPage({exhibits}) {
 
   return (
     <DefaultLayout>
-      <h1 className={title()}>Saison {season}</h1>
+      <div className="grid justify-center pt-8">
+        <h1 className={title()}>Saison 23/24</h1>
+      </div>
       <section className="grid grid-cols-1 lg:grid-cols-2 items-center justify-center gap-8 py-8 md:py-10 w-full">
-        {[
-          {name: "Carnets de Vie", cat: "Concerts d'Ouverture", date: "16 - 20 octobre 2023", src: "carnets_de_vie.webp", href: "/saison2324/carnets-de-vie"},
-          {name: "Exulte", cat: "Symphonique avec chœur", date: "17 - 20 décembre 2023", src: "exulte.webp", href: "/saison2324/exulte"},
-          {name: "TITAN", cat: "Concerts du nouvel an", date: "16 - 20 octobre", src: "titan.webp", href: "/saison2324/titan"},
-          {name: "OPM COMPETITION", cat: "Concours international", date: "16 - 20 octobre", src: "opm_competition.webp", href: "/saison2324/opm-competition"},
-          {name: "FOLK SONGS", cat: "Ensemble vocal", date: "16 - 20 octobre", src: "folk_songs.webp", href: "/saison2324/folk-songs"},
-          {name: "PRINTEMPS MUSICAL DES AIZÉS", cat: "FESTIVAL", date: "18 - 21 avril 2024", src: "aizes.webp", href: "/saison2324/printemps-musical"},
-        ].map((exhibit, index) => (
+        {exhibits.map((exhibit, index) => (
           <div className="w-full px-4" key={index}>
-            <Link href={exhibit.href} passHref>
+            <Link href={`/saison2324/${exhibit.href}`} passHref>
+            {/* <Link href="saison2324/test" passHref> */}
               <Card isPressable className="w-full min-h-96 py-4">
                 <CardHeader className="grid grid-cols-1 lg:grid-cols-3 items-start text-start pb-0 pt-2 px-4">
                   <div className="lg:col-span-2">
                     <h1 className="font-bold text-2xl">{exhibit.name.toUpperCase()}</h1>
                   </div>
                   <div className="col-span-1 lg:text-end">
-                    <p className="text-tiny uppercase font-bold">{exhibit.cat}</p>
-                    <small className="text-default-500">{exhibit.date} {season}</small>
+                    <p className="text-tiny uppercase font-bold">{exhibit.category}</p>
+                    <small className="text-default-500">{dateFormatter(exhibit.startDate, exhibit.endDate)}</small>
                   </div>
                 </CardHeader>
                 <CardBody className="overflow-hidden py-2 flex justify-center items-center">
                   <div className="relative w-full h-96 rounded-xl overflow-hidden">
                     <Image
+                      // Look into fill and sizes
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       alt="Card background"
                       className="object-cover w-full h-full"
-                      src={`/${exhibit.src}`}
-                      layout="fill"
-                      objectFit="cover"
+                      src={`https://poypoy.pockethost.io/api/files/${exhibit.collectionId}/${exhibit.id}/${exhibit.image}`}
                     />
                   </div>
                 </CardBody>
@@ -50,4 +46,53 @@ export default function SeasonPage() {
       </section>
     </DefaultLayout>
   );
+}
+
+export async function getStaticProps() {
+  try {
+    const client = await dbconn();
+    const exhibits = await client.collection('saison2324').getFullList();
+    const currentDate = new Date();
+    exhibits
+      .sort((a, b) => new Date(a.endDate) - new Date(b.endDate))
+      .sort((a, b) => (new Date(a.endDate) >= currentDate ? -1 : 1));
+
+    return {
+      props: { exhibits }
+    };
+  } catch (error) {
+    console.error('Error fetching exhibits:', error);
+    return {
+      props: { exhibits: [] }
+    };
+  }
+}
+
+function dateFormatter(startDateStr, endDateStr) {
+  const monthNamesFrench = [
+    'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+    'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'
+  ];
+
+  const startDate = new Date(startDateStr);
+  const endDate = new Date(endDateStr);
+
+  const startDay = startDate.getDate();
+  const startMonth = startDate.getMonth();
+  const startYear = startDate.getFullYear();
+
+  const endDay = endDate.getDate();
+  const endMonth = endDate.getMonth();
+  const endYear = endDate.getFullYear();
+
+  let formattedDate;
+  if (startMonth === endMonth && startYear === endYear) {
+    formattedDate = `${startDay} - ${endDay} ${monthNamesFrench[startMonth]} ${startYear}`;
+  } else if (startYear === endYear) {
+    formattedDate = `${startDay} ${monthNamesFrench[startMonth]} - ${endDay} ${monthNamesFrench[endMonth]} ${startYear}`;
+  } else {
+    formattedDate = `${startDay} ${monthNamesFrench[startMonth]} ${startYear} - ${endDay} ${monthNamesFrench[endMonth]} ${endYear}`;
+  }
+
+  return formattedDate;
 }

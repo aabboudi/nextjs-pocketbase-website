@@ -43,6 +43,7 @@ const exhibits = {
 export default function Exhibit() {
   const router = useRouter();
   const { exhibit } = router.query;
+  console.log(exhibit);
 
   const exhibitData = exhibits[exhibit];
 
