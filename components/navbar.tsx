@@ -61,33 +61,50 @@ export const Navbar = () => {
             <p className="font-bold text-inherit">OPM</p>
           </NextLink>
         </NavbarBrand>
+
+        {/* Links */}
+        <div className="hidden md:flex gap-4 justify-start ml-2">
+          {siteConfig.navItems.map((item) => (
+            <NavbarItem key={item.href}>
+              <NextLink
+                className={clsx(
+                  linkStyles({ color: "foreground" }),
+                  "data-[active=true]:text-primary data-[active=true]:font-medium",
+                )}
+                color="foreground"
+                href={item.href}
+              >
+                {item.label}
+              </NextLink>
+            </NavbarItem>
+          ))}
+        </div>
       </NavbarContent>
 
-      {/* LINKS ON LG SCREENS */}
-      <NavbarContent className="hidden md:flex basis-1/5 md:basis-full" justify="end">
+      {/* ICONS ON LG SCREENS */}
+      <NavbarContent
+        className="hidden md:flex basis-1/5 md:basis-full"
+        justify="end"
+      >
         <NavbarItem className="hidden md:flex gap-2">
-          <div className="hidden md:flex gap-4 justify-start mr-2">
-            {siteConfig.navItems.map((item) => (
-              <NavbarItem key={item.href}>
-                <NextLink
-                  className={clsx(
-                    linkStyles({ color: "foreground" }),
-                    "data-[active=true]:text-primary data-[active=true]:font-medium",
-                  )}
-                  color="foreground"
-                  href={item.href}
-                >
-                  {item.label}
-                </NextLink>
-              </NavbarItem>
-            ))}
-          </div>
+          {/* <Link isExternal href={siteConfig.links.twitter}>
+            <TwitterIcon className="text-default-500" />
+          </Link>
+          <Link isExternal href={siteConfig.links.discord}>
+            <DiscordIcon className="text-default-500" />
+          </Link>
+          <Link isExternal href={siteConfig.links.github}>
+            <GithubIcon className="text-default-500" />
+          </Link> */}
           <ThemeSwitch />
         </NavbarItem>
       </NavbarContent>
 
       {/* LINKS ON SM SCREENS */}
       <NavbarContent className="md:hidden basis-1 pl-4" justify="end">
+        {/* <Link isExternal href={siteConfig.links.github}>
+          <GithubIcon className="text-default-500" />
+        </Link> */}
         <ThemeSwitch />
         <NavbarMenuToggle />
       </NavbarContent>
