@@ -30,13 +30,11 @@ export default function IndexPage() {
       <section className="relative h-screen w-full">
         <div className="flex flex-col items-center justify-center">
           <Image
-            isBlurred
             src="/opm-inaction.webp"
             alt="Background Image"
             layout="fill"
-            objectFit="cover"
             quality={100}
-            className="absolute inset-0 z-0 rounded-large"
+            className="absolute inset-0 z-0 rounded-large object-cover"
           />
         </div>
         <div className="absolute inset-0 bg-black opacity-50 z-10 rounded-large"></div>
@@ -56,7 +54,7 @@ export default function IndexPage() {
             { name: "Olivier Holt",     country: "France",     src: "/conductors/olivier_holt_france.webp" },
           ].map((composer, index) => (
             <Card
-            isFooterBlurred
+            key={index}
             radius="lg"
             className="w-full flex flex-col items-center border-none"
           >
