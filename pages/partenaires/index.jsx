@@ -14,13 +14,13 @@ export async function getStaticProps() {
 
 export default function Partenaires({ images }) {
   return (
-    <DefaultLayout>
+    <DefaultLayout pageTitle="Partenaires">
       <section className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 items-center md:px-12 lg:px-36">
         {images.map((src, index) => (
-          <div key={index} className="grid h-full bg-white items-center col-span-1 border rounded-large text-white">
+          <div key={index} className="grid h-full bg-white items-center col-span-1 border rounded-large text-white overflow-hidden">
             <Image
               alt={`Image ${index}`}
-              className="w-full rounded-large object-cover"
+              className="w-full object-cover filter grayscale hover:grayscale-0 transition duration-120 cursor-pointer"
               height={200}
               src={src}
               width={200}
