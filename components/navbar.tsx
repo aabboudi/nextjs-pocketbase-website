@@ -71,7 +71,7 @@ export const Navbar = () => {
               <NextLink
                 className={clsx(
                   linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium",
+                  "data-[active=true]:text-primary data-[active=true]:font-medium font-semibold",
                 )}
                 color="foreground"
                 href={item.href}
@@ -95,7 +95,7 @@ export const Navbar = () => {
       {/* HAMBURGER MENU */}
       <NavbarMenu>
         {searchInput}
-        <div className="mx-4 mt-2 flex flex-col text-center gap-2">
+        <div className="mx-4 mt-2 flex flex-col text-center font-semibold gap-2">
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link

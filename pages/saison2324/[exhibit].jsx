@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import DefaultLayout from "@/layouts/default";
 
 const exhibits = {
-  "carnets-de-vie": {
+  "carnets_de_vie": {
     name: "Carnets de Vie",
     cat: "Concerts d'Ouverture",
     date: "16 - 20 octobre 2023",
