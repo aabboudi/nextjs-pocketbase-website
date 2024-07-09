@@ -22,8 +22,7 @@ export default function Contact() {
   };
 
   return (
-    <DefaultLayout>
-      <h1>Contact</h1>
+    <DefaultLayout pageTitle="Contact">
       <div className="grid grid-cols-1 w-full items-center py-8">
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -33,13 +32,13 @@ export default function Contact() {
             <Input
               isRequired
               type="text"
-              label="Name"
+              label="Nom"
               variant="faded"
               {...register("name", {
-                required: "Name is required",
+                required: "Le nom est obligatoire",
                 pattern: {
-                  value: /^[A-Za-z]+$/i,
-                  message: "Name can only contain letters"
+                  value: /^[\p{L}]+$/u,
+                  message: "Le nom ne peut contenir que des lettres"
                 }
               })}
             />
@@ -52,15 +51,21 @@ export default function Contact() {
               type="email"
               label="Email"
               variant="faded"
-              {...register("email", { required: "Email is required" })}
+              {...register("email", {
+                required: "L'email est obligatoire",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "Veuillez présenter un email valide"
+                }
+              })}
             />
-            {errors.email && <span className="text-red-500">{errors.email.message}</span>}
+            {errors.email && <span className="text-sm text-red-500">{errors.email.message}</span>}
           </div>
 
           <div>
             <Input
               type="text"
-              label="Subject"
+              label="Sujet"
               variant="faded"
               {...register("subject")}
             />
@@ -71,9 +76,10 @@ export default function Contact() {
               isRequired
               label="Message"
               labelPlacement="inside"
+              size="lg"
               variant="faded"
               maxLength={3000}
-              {...register("message", { required: "Message is required" })}
+              {...register("message", { required: "Le message est obligatoire" })}
             />
             {errors.message && <span className="text-sm text-red-500">{errors.message.message}</span>}
           </div>

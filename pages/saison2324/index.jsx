@@ -16,7 +16,6 @@ export default function SeasonPage({exhibits}) {
         {exhibits.map((exhibit, index) => (
           <div className="w-full px-4" key={index}>
             <Link href={`/saison2324/${exhibit.href}`} passHref>
-            {/* <Link href="saison2324/test" passHref> */}
               <Card isPressable className="w-full min-h-96 py-4">
                 <CardHeader className="grid grid-cols-1 lg:grid-cols-3 items-start text-start pb-0 pt-2 px-4">
                   <div className="lg:col-span-2">
@@ -24,7 +23,8 @@ export default function SeasonPage({exhibits}) {
                   </div>
                   <div className="col-span-1 lg:text-end">
                     <p className="text-tiny uppercase font-bold">{exhibit.category}</p>
-                    <small className="text-default-500">{dateFormatter(exhibit.startDate, exhibit.endDate)}</small>
+                    {/* <small className="text-default-500">{dateFormatter(exhibit.startDate, exhibit.endDate)}</small> */}
+                    <small className="text-default-500">Date Placeholder</small>
                   </div>
                 </CardHeader>
                 <CardBody className="overflow-hidden py-2 flex justify-center items-center">
@@ -48,14 +48,31 @@ export default function SeasonPage({exhibits}) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   try {
+    console.time('getServerSideProps'); // Start timing the function execution
+
+
+    console.time('dbcon');
     const client = await dbconn();
-    const exhibits = await client.collection('saison2324').getFullList();
+    console.timeEnd('dbcon');
+    console.time('fetchData');
+    const exhibits = await client.collection('saison2324').getFullList({
+      // expand: 'details'
+    });
+    console.timeEnd('fetchData');
+
     const currentDate = new Date();
-    exhibits
-      .sort((a, b) => new Date(a.endDate) - new Date(b.endDate))
-      .sort((a, b) => (new Date(a.endDate) >= currentDate ? -1 : 1));
+    console.time('sorting');
+    // exhibits.sort((a, b) => {
+    //   // Sort by end date, descending
+    //   if (new Date(a.endDate) > new Date(b.endDate)) return -1;
+    //   if (new Date(a.endDate) < new Date(b.endDate)) return 1;
+    //   return 0;
+    // });
+    console.timeEnd('sorting');
+
+    console.timeEnd('getServerSideProps'); // End timing the function execution
 
     return {
       props: { exhibits }
@@ -67,6 +84,9 @@ export async function getStaticProps() {
     };
   }
 }
+
+
+
 
 function dateFormatter(startDateStr, endDateStr) {
   const monthNamesFrench = [
