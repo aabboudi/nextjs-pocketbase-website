@@ -56,21 +56,13 @@ export async function getServerSideProps() {
     console.time('dbcon');
     const client = await dbconn();
     console.timeEnd('dbcon');
-    console.time('fetchData');
-    const exhibits = await client.collection('saison2324').getFullList({
-      // expand: 'details'
-    });
-    console.timeEnd('fetchData');
+    const exhibits = await client.collection('saison2324').getFullList();
 
-    const currentDate = new Date();
-    console.time('sorting');
     // exhibits.sort((a, b) => {
-    //   // Sort by end date, descending
     //   if (new Date(a.endDate) > new Date(b.endDate)) return -1;
     //   if (new Date(a.endDate) < new Date(b.endDate)) return 1;
     //   return 0;
     // });
-    console.timeEnd('sorting');
 
     console.timeEnd('getServerSideProps'); // End timing the function execution
 
