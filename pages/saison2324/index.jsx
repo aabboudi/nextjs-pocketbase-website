@@ -14,9 +14,9 @@ export default function SeasonPage({exhibits}) {
       </div>
       <section className="grid grid-cols-1 lg:grid-cols-2 items-center justify-center gap-8 py-8 md:py-10 w-full">
         {exhibits.map((exhibit, index) => (
-          <div className="w-full px-4" key={index}>
+          <div className="w-full h-full" key={index}>
             <Link href={`/saison2324/${exhibit.href}`} passHref>
-              <Card isPressable className="w-full min-h-96 py-4">
+              <Card isPressable className="w-full h-full min-h-96 py-4">
                 <CardHeader className="grid grid-cols-1 lg:grid-cols-3 items-start text-start pb-0 pt-2 px-4">
                   <div className="lg:col-span-2">
                     <h1 className="font-bold text-2xl">{exhibit.name.toUpperCase()}</h1>
@@ -50,21 +50,13 @@ export default function SeasonPage({exhibits}) {
 
 export async function getServerSideProps() {
   try {
-    console.time('getServerSideProps'); // Start timing the function execution
-
-
-    console.time('dbcon');
     const client = await dbconn();
-    console.timeEnd('dbcon');
     const exhibits = await client.collection('saison2324').getFullList();
 
-    // exhibits.sort((a, b) => {
-    //   if (new Date(a.endDate) > new Date(b.endDate)) return -1;
-    //   if (new Date(a.endDate) < new Date(b.endDate)) return 1;
-    //   return 0;
-    // });
-
-    console.timeEnd('getServerSideProps'); // End timing the function execution
+    // const currentDate = new Date();
+    // exhibits
+    //   .sort((a, b) => new Date(a.endDate) - new Date(b.endDate))
+    //   .sort((a, b) => (new Date(a.endDate) >= currentDate ? -1 : 1));
 
     return {
       props: { exhibits }

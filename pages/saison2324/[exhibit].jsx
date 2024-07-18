@@ -40,10 +40,11 @@ export default function Exhibit({ exhibitDetails }) {
 
   return (
     <DefaultLayout pageTitle={exhibitDetails.name}>
-      <h1>{exhibitDetails.name}</h1>
-      <h1>{exhibitDetails.category}</h1>
+      <div className="grid justify-center">
+        <h1>{exhibitDetails.category}</h1>
+      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 py-3">
         <div className="grid justify-center lg:justify-start">
           <Tabs aria-label="Options" isVertical={isVertical} className="grid justify-center">
 
@@ -66,7 +67,7 @@ export default function Exhibit({ exhibitDetails }) {
                         </DropdownTrigger>
                         <DropdownMenu
                           disallowEmptySelection
-                          aria-label="Merge options"
+                          aria-label="Ticket options"
                           selectedKeys={selectedOption}
                           selectionMode="single"
                           onSelectionChange={setSelectedOption}
@@ -78,7 +79,7 @@ export default function Exhibit({ exhibitDetails }) {
                             "Catégorie 2": exhibitSet.expand.fee.fee_cat2,
                             "Etudiant": exhibitSet.expand.fee.fee_etud,
                           }).map(([fee_category, fee]) => (
-                            <DropdownItem key={fee_category} description={`${fee} DH`}>
+                            fee && <DropdownItem key={fee_category} description={`${fee} DH`}>
                               {fee_category}
                             </DropdownItem>
                           ))}
