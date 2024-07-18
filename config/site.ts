@@ -17,8 +17,8 @@ export const siteConfig = {
       href: "/partenaires",
     },
     {
-      label: "En Image",
-      href: "/en-image",
+      label: "En Images",
+      href: "/en-images",
     },
     {
       label: "Contact",

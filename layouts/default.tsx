@@ -14,7 +14,7 @@ export default function DefaultLayout({ children, pageTitle }: DefaultLayoutProp
       <Head />
       <Navbar />
       <main className="container flex-grow mx-auto px-6 py-16">
-        <h1 className="text-3xl text-center font-bold">{pageTitle}</h1>
+        <h1 className="text-3xl text-center font-bold pt-6">{pageTitle}</h1>
         {children}
       </main>
       <Footer />
