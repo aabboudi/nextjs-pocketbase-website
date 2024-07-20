@@ -1,4 +1,4 @@
-name: Azure Static Web Apps CI/CD
+name: Azure Pipeline
 
 on:
   push:
@@ -19,11 +19,7 @@ jobs:
         with:
           submodules: true
           lfs: false
-      - run: npm install
-      - name: Set environment variables
-        run: |
-          echo "POCKETBASE_EMAIL=${{ secrets.POCKETBASE_EMAIL }}" >> $GITHUB_ENV
-          echo "POCKETBASE_PASSWORD=${{ secrets.POCKETBASE_PASSWORD }}" >> $GITHUB_ENV
+      - run: npm install --omit=dev
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
