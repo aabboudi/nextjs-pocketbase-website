@@ -1,9 +1,6 @@
 import PocketBase from 'pocketbase';
-import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
-
-dotenv.config();
 
 const url = 'https://poypoy.pockethost.io/';
 const client = new PocketBase(url);
@@ -18,15 +15,16 @@ async function authenticateAndUpdateToken() {
     const newToken = authData.token;
     process.env.POCKETBASE_SESSION_TOKEN = newToken;
     
-    // Update .env file with the new token
-    const envPath = path.join(__dirname, '.env');
-    console.log(envPath);
-    const envContent = `
-      POCKETBASE_SESSION_TOKEN=${newToken}
-      POCKETBASE_EMAIL=${email}
-      POCKETBASE_PASSWORD=${password}
-    `;
-    fs.writeFileSync(envPath, envContent.trim());
+    // Update .env file with the new token (for local development)
+    if (process.env.NODE_ENV !== 'production') {
+      const envPath = path.join(__dirname, '.env');
+      const envContent = `
+        POCKETBASE_SESSION_TOKEN=${newToken}
+        POCKETBASE_EMAIL=${email}
+        POCKETBASE_PASSWORD=${password}
+      `;
+      fs.writeFileSync(envPath, envContent.trim());
+    }
 
     return newToken;
   } catch (error) {
