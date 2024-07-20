@@ -112,7 +112,7 @@ export default function Exhibit({ exhibitDetails }) {
   );
 }
 
-export async function getServerSideProps({ query }) {
+export async function getStaticProps({ query }) {
   try {
     const client = await dbconn();
     let exhibitDetails = await client.collection('saison2324').getFullList({
@@ -122,8 +122,14 @@ export async function getServerSideProps({ query }) {
 
     exhibitDetails = exhibitDetails[0] || null;
 
-    return { props: { exhibitDetails } };
+    return {
+      props: { exhibitDetails },
+      revalidate: 60
+    };
   } catch {
-    return { notFound: true };
+    return {
+      notFound: true,
+      revalidate: 60
+    };
   }
 }

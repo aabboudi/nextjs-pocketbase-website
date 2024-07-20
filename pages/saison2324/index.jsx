@@ -59,13 +59,13 @@ export async function getStaticProps() {
 
     return {
       props: { exhibits },
-      revalidate: 60 // Revalidate every 60 seconds
+      revalidate: 60
     };
   } catch (error) {
     console.error('Error fetching exhibits:', error);
     return {
       props: { exhibits: [] },
-      revalidate: 60 // Revalidate every 60 seconds
+      revalidate: 60
     };
   }
 }
