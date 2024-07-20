@@ -5,8 +5,7 @@ import Image from "next/image";
 import Link from 'next/link';
 import dbconn from "../api/dbconn";
 
-export default function SeasonPage({exhibits}) {
-
+export default function SeasonPage({ exhibits }) {
   return (
     <DefaultLayout>
       <div className="grid justify-center pt-8">
@@ -48,7 +47,7 @@ export default function SeasonPage({exhibits}) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   try {
     const client = await dbconn();
     const exhibits = await client.collection('saison2324').getFullList();
@@ -59,12 +58,14 @@ export async function getServerSideProps() {
     //   .sort((a, b) => (new Date(a.endDate) >= currentDate ? -1 : 1));
 
     return {
-      props: { exhibits }
+      props: { exhibits },
+      revalidate: 60 // Revalidate every 60 seconds
     };
   } catch (error) {
     console.error('Error fetching exhibits:', error);
     return {
-      props: { exhibits: [] }
+      props: { exhibits: [] },
+      revalidate: 60 // Revalidate every 60 seconds
     };
   }
 }
