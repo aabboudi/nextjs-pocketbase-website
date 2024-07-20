@@ -5,7 +5,7 @@ import { Footer } from "@/components/footer";
 
 interface DefaultLayoutProps {
   children: React.ReactNode;
-  pageTitle: string;
+  pageTitle?: string;
 }
 
 export default function DefaultLayout({ children, pageTitle }: DefaultLayoutProps) {
