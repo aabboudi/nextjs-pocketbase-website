@@ -112,28 +112,17 @@ export default function Exhibit({ exhibitDetails }) {
   );
 }
 
-export async function getStaticPaths() {
-  const client = await dbconn();
-  const exhibits = await client.collection('saison2324').getFullList();
-  
-  const paths = exhibits.map(exhibit => ({
-    params: { exhibit: exhibit.href }
-  }));
-
-  return { paths, fallback: true };
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ query }) {
   try {
     const client = await dbconn();
     let exhibitDetails = await client.collection('saison2324').getFullList({
-      filter: `href="${params.exhibit}"`,
+      filter: `href="${query.exhibit}"`,
       expand: "details,details.fee"
     });
 
     exhibitDetails = exhibitDetails[0] || null;
 
-    return { props: { exhibitDetails }, revalidate: 10 };
+    return { props: { exhibitDetails } };
   } catch {
     return { notFound: true };
   }
