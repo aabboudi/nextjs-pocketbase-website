@@ -7,6 +7,7 @@ import { Button, ButtonGroup } from '@nextui-org/button';
 import { Tabs, Tab } from "@nextui-org/tabs";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@nextui-org/dropdown';
 import { LocationDotIcon, CalendarIcon, ChevronDownIcon } from "@/components/icons";
+
 import dbconn from "../api/dbconn";
 
 export default function Exhibit({ exhibitDetails }) {
@@ -112,25 +113,14 @@ export default function Exhibit({ exhibitDetails }) {
 }
 
 export async function getStaticPaths() {
-  try {
-    const client = await dbconn();
-    const exhibits = await client.collection('saison2324').getFullList();
+  const client = await dbconn();
+  const exhibits = await client.collection('saison2324').getFullList();
+  
+  const paths = exhibits.map(exhibit => ({
+    params: { exhibit: exhibit.href }
+  }));
 
-    const paths = exhibits.map((exhibit) => ({
-      params: { exhibit: exhibit.href }
-    }));
-
-    return {
-      paths,
-      fallback: 'blocking'
-    };
-  } catch (error) {
-    console.error("Error fetching paths:", error);
-    return {
-      paths: [],
-      fallback: 'blocking'
-    };
-  }
+  return { paths, fallback: true };
 }
 
 export async function getStaticProps({ params }) {
@@ -143,13 +133,8 @@ export async function getStaticProps({ params }) {
 
     exhibitDetails = exhibitDetails[0] || null;
 
-    if (!exhibitDetails) {
-      return { notFound: true };
-    }
-
     return { props: { exhibitDetails }, revalidate: 10 };
-  } catch (error) {
-    console.error("Error fetching exhibit details:", error);
+  } catch {
     return { notFound: true };
   }
 }
