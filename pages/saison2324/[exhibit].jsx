@@ -124,7 +124,8 @@ export async function getStaticPaths() {
       paths,
       fallback: 'blocking'
     };
-  } catch {
+  } catch (error) {
+    console.error("Error fetching paths:", error);
     return {
       paths: [],
       fallback: 'blocking'
@@ -146,11 +147,9 @@ export async function getStaticProps({ params }) {
       return { notFound: true };
     }
 
-    return {
-      props: { exhibitDetails },
-      revalidate: 60
-    };
-  } catch {
+    return { props: { exhibitDetails }, revalidate: 10 };
+  } catch (error) {
+    console.error("Error fetching exhibit details:", error);
     return { notFound: true };
   }
 }
