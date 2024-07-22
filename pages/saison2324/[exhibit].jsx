@@ -9,6 +9,7 @@ import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@nextui-o
 import { LocationDotIcon, CalendarIcon, ChevronDownIcon } from "@/components/icons";
 
 import dbconn from "../api/dbconn";
+import { formatDate } from '../api/util';
 
 export default function Exhibit({ exhibitDetails }) {
 
@@ -53,7 +54,12 @@ export default function Exhibit({ exhibitDetails }) {
                 <Card className="max-w-[400px] lg:max-w-[600px] mx-auto">
                   <CardBody className=''>
                     <div className='flex justify-center lg:justify-start'><LocationDotIcon size={24} />{exhibitSet.location.split('|')[1].trim()}</div>
-                    <div className='flex justify-center lg:justify-start'><CalendarIcon size={24} />{exhibitSet.time}</div>
+                    <div className='flex justify-center lg:justify-start'><CalendarIcon size={24} />
+                      {(() => {
+                        const [formattedDate, formattedTime] = formatDate(exhibitSet.time);
+                        return `${formattedDate} à ${formattedTime}`;
+                      })()}
+                    </div>
                   </CardBody>
 
                   <Divider />
@@ -121,6 +127,7 @@ export async function getServerSideProps({ query }) {
     });
 
     exhibitDetails = exhibitDetails[0] || null;
+    exhibitDetails ? exhibitDetails.expand.details.sort((a, b) => new Date(a.time) - new Date(b.time)) : 1;
 
     return { props: { exhibitDetails } };
   } catch {
