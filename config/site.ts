@@ -1,8 +1,8 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Next.js + NextUI",
-  description: "Make beautiful websites regardless of your design experience.",
+  name: "Orchestre Philharmonique du Maroc",
+  description: "La référence de la musique classique au Maroc.",
   navItems: [
     {
       label: "Saison 23/24",
