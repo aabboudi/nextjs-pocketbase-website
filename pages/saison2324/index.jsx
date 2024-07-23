@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from 'next/link';
 import dbconn from "../api/dbconn";
 
+import { formatDateRange } from "../api/util";
+
 export default function SeasonPage({ exhibits }) {
   return (
     <DefaultLayout>
@@ -23,7 +25,7 @@ export default function SeasonPage({ exhibits }) {
                   <div className="col-span-1 lg:text-end">
                     <p className="text-tiny uppercase font-bold">{exhibit.category}</p>
                     {/* <small className="text-default-500">{dateFormatter(exhibit.startDate, exhibit.endDate)}</small> */}
-                    <small className="text-default-500">Date Placeholder</small>
+                    <small className="text-default-500">{formatDateRange(exhibit.expand?.details) || "Date Placeholder"}</small>
                   </div>
                 </CardHeader>
                 <CardBody className="overflow-hidden py-2 flex justify-center items-center">
@@ -50,12 +52,20 @@ export default function SeasonPage({ exhibits }) {
 export async function getStaticProps() {
   try {
     const client = await dbconn();
-    const exhibits = await client.collection('saison2324').getFullList();
+    const exhibits = await client.collection('saison2324').getFullList({
+      expand: "details"
+    });
 
-    // const currentDate = new Date();
-    // exhibits
-    //   .sort((a, b) => new Date(a.endDate) - new Date(b.endDate))
-    //   .sort((a, b) => (new Date(a.endDate) >= currentDate ? -1 : 1));
+    try {
+      exhibits.sort((a, b) => {
+        const aTime = a.expand ? new Date(a.expand.details[0].time) : new Date();
+        const bTime = b.expand ? new Date(b.expand.details[0].time) : new Date();
+        return new Date(aTime) - new Date(bTime);
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+    console.log(exhibits[0].expand.details);
 
     return {
       props: { exhibits },
@@ -68,36 +78,4 @@ export async function getStaticProps() {
       revalidate: 60
     };
   }
-}
-
-
-
-
-function dateFormatter(startDateStr, endDateStr) {
-  const monthNamesFrench = [
-    'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
-    'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'
-  ];
-
-  const startDate = new Date(startDateStr);
-  const endDate = new Date(endDateStr);
-
-  const startDay = startDate.getDate();
-  const startMonth = startDate.getMonth();
-  const startYear = startDate.getFullYear();
-
-  const endDay = endDate.getDate();
-  const endMonth = endDate.getMonth();
-  const endYear = endDate.getFullYear();
-
-  let formattedDate;
-  if (startMonth === endMonth && startYear === endYear) {
-    formattedDate = `${startDay} - ${endDay} ${monthNamesFrench[startMonth]} ${startYear}`;
-  } else if (startYear === endYear) {
-    formattedDate = `${startDay} ${monthNamesFrench[startMonth]} - ${endDay} ${monthNamesFrench[endMonth]} ${startYear}`;
-  } else {
-    formattedDate = `${startDay} ${monthNamesFrench[startMonth]} ${startYear} - ${endDay} ${monthNamesFrench[endMonth]} ${endYear}`;
-  }
-
-  return formattedDate;
 }
