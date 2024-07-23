@@ -1,7 +1,9 @@
+import React from "react";
 import DefaultLayout from "@/layouts/default";
 import { Input, Textarea } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { useForm } from "react-hook-form";
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure} from "@nextui-org/modal";
 
 export default function Contact() {
   const {
@@ -17,20 +19,24 @@ export default function Contact() {
     }
   });
 
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
+  const [formData, setFormData] = React.useState(null);
+
   const onSubmit = (data) => {
-    console.log(data);
+    setFormData(data);
+    onOpen();
   };
 
   return (
     <DefaultLayout pageTitle="Contact">
-      <div className="grid grid-cols-2 items-center gap-4 py-8">
+      <div className="grid lg:grid-cols-2 items-center gap-4 py-8">
         <section>
           lorem ipsum
         </section>
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="grid grid-cols-1 w-full lg:w-2/3 gap-4"
+          className="grid grid-cols-1 w-full lg:w-2/3 lg:mx-auto gap-4"
         >
           <div>
             <Input
@@ -89,15 +95,32 @@ export default function Contact() {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <Button variant="solid" type="button" onClick={contactAlert}>Envoyer</Button>
+            <Button variant="solid" type="submit">Envoyer</Button>
             <Button variant="bordered" type="reset">Réinitialiser</Button>
           </div>
         </form>
       </div>
+
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">C'est une démo. Voici vos infos :</ModalHeader>
+              <ModalBody>
+                {formData && (
+                  <div>
+                    <p><strong>Nom :</strong> {formData.name}</p>
+                    <p><strong>Email :</strong> {formData.email}</p>
+                    {formData.subject && <p><strong>Sujet :</strong> {formData.subject}</p>}
+                    <p><strong>Message :</strong> {formData.message.length > 100 ? formData.message.substring(0,100) + "..." : formData.message}</p>
+                  </div>
+                )}
+              </ModalBody>
+              <ModalFooter><Button color="success" onPress={onClose}>OK</Button></ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </DefaultLayout>
   );
-}
-
-const contactAlert = () => {
-  alert("This is a test flight. Message is not sent.");
 }
