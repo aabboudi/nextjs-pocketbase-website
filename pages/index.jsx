@@ -32,7 +32,14 @@ export default function IndexPage() {
         </div>
         <div className="absolute inset-0 bg-black opacity-50 z-10 rounded-large"></div>
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white p-8">
-          <h1 className="text-4xl md:text-6xl font-bold">Your Large Text Here</h1>
+          {/* <h1 className="text-4xl md:text-6xl font-bold">Orchestre Philharmonique du Maroc</h1> */}
+          <div className="inline-block max-w-lg text-center justify-center">
+            <h1 className={title()}>Orchestre</h1>
+            <br />
+            <h1 className={title()}>Philharmonique</h1>
+            <br />
+            <h1 className={title({ color: "blue" })}>du Maroc</h1>
+          </div>
         </div>
       </section>
 

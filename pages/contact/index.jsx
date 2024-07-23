@@ -23,10 +23,14 @@ export default function Contact() {
 
   return (
     <DefaultLayout pageTitle="Contact">
-      <div className="grid grid-cols-1 w-full items-center py-8">
+      <div className="grid grid-cols-2 items-center gap-4 py-8">
+        <section>
+          lorem ipsum
+        </section>
+
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="grid grid-cols-1 w-full md:w-1/2 lg:w-1/3 gap-4"
+          className="grid grid-cols-1 w-full lg:w-2/3 gap-4"
         >
           <div>
             <Input
@@ -85,11 +89,15 @@ export default function Contact() {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <Button variant="solid" type="submit">Envoyer</Button>
+            <Button variant="solid" type="button" onClick={contactAlert}>Envoyer</Button>
             <Button variant="bordered" type="reset">Réinitialiser</Button>
           </div>
         </form>
       </div>
     </DefaultLayout>
   );
+}
+
+const contactAlert = () => {
+  alert("This is a test flight. Message is not sent.");
 }
