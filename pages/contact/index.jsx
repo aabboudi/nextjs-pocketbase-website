@@ -122,12 +122,13 @@ export default function Contact() {
   };
 
   return (
-    <DefaultLayout pageTitle="Contact">
-      <div className="grid lg:grid-cols-2 items-center gap-4 py-8">
-        <section className="order-2 lg:order-1">
+    <DefaultLayout pageTitle="Contactez-Nous">
+      <div className="grid lg:grid-cols-1 gap-4 py-8">
+        {/* <section className="order-2 lg:order-1">
           lorem ipsum
-        </section>
-        <section className="order-1 lg:order-2 w-full xl:w-2/3 xl:mx-auto">
+        </section> */}
+        {/* <section className="order-1 lg:order-2 w-full xl:w-2/3 xl:mx-auto"> */}
+        <section className="w-full max-w-[600px] mx-auto">
           <ContactForm onSubmit={onSubmit} />
         </section>
       </div>
