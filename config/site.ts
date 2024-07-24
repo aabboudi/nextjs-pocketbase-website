@@ -52,16 +52,38 @@ export const siteConfig = {
     },
   ],
   footerItems: [
-    {
-      label: "Conditions Générales de Vente",
-      href: "/conditions_generales_de_vente",
-    },
+    [
+      {
+        label: "Saison 23/24",
+        href: "/saison2324",
+      },
+      {
+        label: "Weekends de l'OPM",
+        href: "/musique_de_chambre",
+      },
+      {
+        label: "Conditions Générales de Vente",
+        href: "/conditions_generales_de_vente",
+      },
+    ],
+    [
+      {
+        label: "L'Orchestre",
+        href: "/orchestre",
+      },
+      {
+        label: "Nos Partenaires",
+        href: "/partenaires",
+      },
+      {
+        label: "Contactez-Nous",
+        href: "/contact",
+      },
+    ]
   ],
   links: {
-    github: "https://github.com/nextui-org/nextui",
-    twitter: "https://twitter.com/getnextui",
-    docs: "https://nextui-docs-v2.vercel.app",
-    discord: "https://discord.gg/9b6yyZKmH4",
-    sponsor: "https://patreon.com/jrgarciadev",
+    facebook: "https://www.facebook.com/ConcertsOPM",
+    instagram: "https://www.instagram.com/orchestre_philharmonique_maroc/",
+    youtube: "https://www.youtube.com/channel/UCB_g5kRjIK-sFM3K6KF6JCg",
   },
 };
