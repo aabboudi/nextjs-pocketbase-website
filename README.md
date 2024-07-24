@@ -10,6 +10,7 @@ And on Vercel here: [OPM on Vercel](https://opm-project-abboudi.vercel.app/), [a
 
 - [Next.js 14](https://nextjs.org/docs/getting-started)
 - [NextUI](https://nextui.org)
+- [PocketBase](https://pocketbase.io/)
 - [Tailwind CSS](https://tailwindcss.com)
 - [Tailwind Variants](https://tailwind-variants.org)
 - [TypeScript](https://www.typescriptlang.org)
