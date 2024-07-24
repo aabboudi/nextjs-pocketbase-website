@@ -31,7 +31,7 @@ export const Footer = () => {
       </section>
       <Divider />
       <section className="text-sm text-center text-slate-500 select-none py-4">
-        Copyright © 2024 - Tous droits réservés par l'Orchestre Philharmonique du Maroc
+        Copyright © {new Date().getFullYear() || "2024"} - Tous droits réservés par l'Orchestre Philharmonique du Maroc
       </section>
     </footer>
   );
