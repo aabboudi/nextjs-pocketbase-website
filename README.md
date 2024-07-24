@@ -1,12 +1,10 @@
-# Next.js & NextUI Template
+# Next.js & NextUI Showcase Website
 
-This is a template for creating applications using Next.js 14 (pages directory) and NextUI (v2).
+This is a showcase website for the Moroccan Philharmonic Orchestra using Next.js 14 (pages directory) and NextUI (v2).
 
-[Try it on CodeSandbox](https://githubbox.com/nextui-org/next-pages-template)
+Hosted on Azure Static Web Apps here: [OPM on Azure](https://blue-grass-0fde64303.5.azurestaticapps.net/)
 
->Note: Since Next.js 14, the pages router is recommend migrating to the [new App Router](https://nextjs.org/docs/app) to leverage React's latest features
->
->Read more: [Pages Router](https://nextjs.org/docs/pages)
+And on Vercel here: [OPM on Vercel](https://opm-project-abboudi.vercel.app/), [alternative link 1](https://opm-abdellah-abboudi.vercel.app/), [alternative link 2](https://opm-git-master-abdellah-abboudi.vercel.app/)
 
 ## Technologies Used
 
@@ -17,18 +15,25 @@ This is a template for creating applications using Next.js 14 (pages directory) 
 - [TypeScript](https://www.typescriptlang.org)
 - [Framer Motion](https://www.framer.com/motion)
 - [next-themes](https://github.com/pacocoursey/next-themes)
+- [Open Graph](https://ogp.me/)
+- [Azure SWA](https://azure.microsoft.com/en-us/products/app-service/static)
+- [Vercel](https://vercel.com/)
 
 ## How to Use
 
-To create a new project based on this template using `create-next-app`, run the following command:
+To use this project as a base for your own, run the following command:
 
 ```bash
-npx create-next-app -e https://github.com/nextui-org/next-pages-template
+git clone https://github.com/aabboudi/philharmony.git
+```
+
+To contribute to this project, run the following command:
+
+```bash
+git pull https://github.com/aabboudi/philharmony.git
 ```
 
 ### Install dependencies
-
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
 
 ```bash
 npm install
@@ -40,16 +45,6 @@ npm install
 npm run dev
 ```
 
-### Setup pnpm (optional)
-
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
-
-```bash
-public-hoist-pattern[]=*@nextui-org/*
-```
-
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
-
 ## License
 
-Licensed under the [MIT license](https://github.com/nextui-org/next-pages-template/blob/main/LICENSE).
+Licensed under the [MIT license](https://github.com/aabboudi/philharmony/blob/master/LICENSE). Some of the content of the website may be property of OPM.
