@@ -1,9 +1,9 @@
 import { title } from "@/components/primitives";
 import DefaultLayout from "@/layouts/default";
 import { Image } from "@nextui-org/image";
-import {Card, CardBody} from "@nextui-org/card";
+import { Card, CardBody } from "@nextui-org/card";
 
-export default function DocsPage() {
+export default function Orchestre() {
   return (
     <DefaultLayout>
       <div className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
@@ -23,9 +23,9 @@ export default function DocsPage() {
           <div>
             <Card>
               <CardBody>
-              <p className="text-justify">
-                Créé en 1996, l'Orchestre Philharmonique du Maroc est composé de quatre-vingts musiciens professionnels. A chaque saison, l'Orchestre donne une cinquantaine de concerts, offrant ainsi à son public une grande variété de programmes sur trois siècles de musique, du grand répertoire symphonique à la musique contemporaine, en passant par l'opéra et la musique de chambre. <br /><br /> Cet ancrage dans le paysage culturel marocain a permis de donner ses lettres de noblesse à la profession de musicien. En 2014 l'Orchestre Philharmonique du Maroc a été reconnu association d'utilité publique. En 26 ans d'existence, l'OPM est devenu la référence en matière de musique classique au Maroc.
-              </p>
+                <p className="text-justify">
+                  Créé en 1996, l'Orchestre Philharmonique du Maroc est composé de quatre-vingts musiciens professionnels. À chaque saison, l'Orchestre donne une cinquantaine de concerts, offrant ainsi à son public une grande variété de programmes sur trois siècles de musique, du grand répertoire symphonique à la musique contemporaine, en passant par l'opéra et la musique de chambre. <br /><br /> Cet ancrage dans le paysage culturel marocain a permis de donner ses lettres de noblesse à la profession de musicien. En 2014, l'Orchestre Philharmonique du Maroc a été reconnu association d'utilité publique. En 26 ans d'existence, l'OPM est devenu la référence en matière de musique classique au Maroc.
+                </p>
               </CardBody>
             </Card>
           </div>
@@ -53,9 +53,9 @@ export default function DocsPage() {
           <div>
             <Card>
               <CardBody>
-              <p className="text-justify">
-                Créé en 1996, l'Orchestre Philharmonique du Maroc est composé de quatre-vingts musiciens professionnels. A chaque saison, l'Orchestre donne une cinquantaine de concerts, offrant ainsi à son public une grande variété de programmes sur trois siècles de musique, du grand répertoire symphonique à la musique contemporaine, en passant par l'opéra et la musique de chambre. <br /><br /> Cet ancrage dans le paysage culturel marocain a permis de donner ses lettres de noblesse à la profession de musicien. En 2014 l'Orchestre Philharmonique du Maroc a été reconnu association d'utilité publique. En 26 ans d'existence, l'OPM est devenu la référence en matière de musique classique au Maroc.
-              </p>
+                <p className="text-justify">
+                  Créé en 1996, l'Orchestre Philharmonique du Maroc est composé de quatre-vingts musiciens professionnels. À chaque saison, l'Orchestre donne une cinquantaine de concerts, offrant ainsi à son public une grande variété de programmes sur trois siècles de musique, du grand répertoire symphonique à la musique contemporaine, en passant par l'opéra et la musique de chambre. <br /><br /> Cet ancrage dans le paysage culturel marocain a permis de donner ses lettres de noblesse à la profession de musicien. En 2014, l'Orchestre Philharmonique du Maroc a été reconnu association d'utilité publique. En 26 ans d'existence, l'OPM est devenu la référence en matière de musique classique au Maroc.
+                </p>
               </CardBody>
             </Card>
           </div>

@@ -9,10 +9,37 @@ import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@nextui-o
 import { LocationDotIcon, CalendarIcon, ChevronDownIcon } from "@/components/icons";
 
 import dbconn from "../api/dbconn";
-import { formatDate } from '../api/util';
+import { formatDate } from '../api/utils';
 
-export default function Exhibit({ exhibitDetails }) {
+interface ExhibitDetails {
+  id: string;
+  name: string;
+  category: string;
+  collectionId: string;
+  image: string;
+  description: string;
+  expand?: {
+    details?: Array<{
+      id: string;
+      location: string;
+      time: string;
+      expand?: {
+        fee?: {
+          fee_cat1?: string;
+          fee_cat2?: string;
+          fee_etud?: string;
+        }
+      }
+    }>;
+  };
+}
 
+interface Props {
+  exhibitDetails: ExhibitDetails | null;
+  endpoint: string;
+}
+
+export default function Exhibit({ exhibitDetails, endpoint }: Props) {
   if (!exhibitDetails) {
     return (
       <DefaultLayout>
@@ -21,11 +48,10 @@ export default function Exhibit({ exhibitDetails }) {
     );
   }
 
-  const [isVertical, setIsVertical] = useState(false);
+  const [isVertical, setIsVertical] = useState<boolean>(false);
 
   const handleResize = () => {
-    if (window.innerWidth >= 1024) { setIsVertical(true) }
-    else { setIsVertical(false) }
+    setIsVertical(window.innerWidth >= 1024);
   };
 
   useEffect(() => {
@@ -34,10 +60,19 @@ export default function Exhibit({ exhibitDetails }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const [selectedOption, setSelectedOption] = React.useState(new Set(["Catégorie 1"]));
+  const [selectedOption, setSelectedOption] = React.useState<Set<string>>(new Set(["Catégorie 1"]));
 
   // Convert the Set to an Array and get the first value.
   const selectedOptionValue = Array.from(selectedOption)[0];
+
+  const handleSelectionChange = (
+    keys: "all" | Set<React.Key> & { anchorKey?: string; currentKey?: string }
+  ) => {
+    if (keys !== "all" && keys instanceof Set) {
+      const keysArray = Array.from(keys);
+      setSelectedOption(new Set(keysArray as string[]));
+    }
+  };
 
   return (
     <DefaultLayout pageTitle={exhibitDetails.name}>
@@ -48,8 +83,7 @@ export default function Exhibit({ exhibitDetails }) {
       <div className="grid grid-cols-1 lg:grid-cols-2 py-3">
         <div className="grid justify-center lg:justify-start">
           <Tabs aria-label="Options" isVertical={isVertical} className="grid justify-center">
-
-            {exhibitDetails.expand.details.map((exhibitSet, index) => (
+            {exhibitDetails?.expand?.details?.map((exhibitSet) => (
               <Tab key={exhibitSet.id} title={exhibitSet.location.split('|')[0].trim()} className="justify-center">
                 <Card className="max-w-[400px] lg:max-w-[600px] mx-auto">
                   <CardBody className=''>
@@ -76,19 +110,22 @@ export default function Exhibit({ exhibitDetails }) {
                           aria-label="Ticket options"
                           selectedKeys={selectedOption}
                           selectionMode="single"
-                          onSelectionChange={setSelectedOption}
+                          onSelectionChange={handleSelectionChange}
                           className="max-w-[300px]"
                         >
                           {
-                          Object.entries({
-                            "Catégorie 1": exhibitSet.expand.fee.fee_cat1,
-                            "Catégorie 2": exhibitSet.expand.fee.fee_cat2,
-                            "Etudiant": exhibitSet.expand.fee.fee_etud,
-                          }).map(([fee_category, fee]) => (
-                            fee && <DropdownItem key={fee_category} description={`${fee} DH`}>
-                              {fee_category}
-                            </DropdownItem>
-                          ))}
+                            Object.entries({
+                              "Catégorie 1": exhibitSet?.expand?.fee?.fee_cat1 ?? 0,
+                              "Catégorie 2": exhibitSet?.expand?.fee?.fee_cat2 ?? 0,
+                              "Etudiant": exhibitSet?.expand?.fee?.fee_etud ?? 0,
+                            })
+                              .filter(([_, fee]) => fee)
+                              .map(([fee_category, fee]) => (
+                                <DropdownItem key={fee_category} description={`${fee} DH`}>
+                                  {fee_category}
+                                </DropdownItem>
+                              ))
+                          }
                         </DropdownMenu>
                       </Dropdown>
                     </ButtonGroup>
@@ -104,32 +141,37 @@ export default function Exhibit({ exhibitDetails }) {
 
         <div>
           <Image
-            isBlurred
             width={1000}
             height={1000}
             alt="Card background"
             className="object-cover"
-            src={`https://poypoy.pockethost.io/api/files/${exhibitDetails.collectionId}/${exhibitDetails.id}/${exhibitDetails.image}`}
+            src={`${endpoint}/${exhibitDetails.collectionId}/${exhibitDetails.id}/${exhibitDetails.image}`}
           />
         </div>
-          
       </div>
     </DefaultLayout>
   );
 }
 
-export async function getServerSideProps({ query }) {
+export async function getServerSideProps({ query }: { query: { exhibit: string } }) {
   try {
     const client = await dbconn();
-    let exhibitDetails = await client.collection('saison2324').getFullList({
+
+    if (!client) {
+      throw new Error("Client is undefined");
+    }
+
+    let exhibitDetailsArray = await client.collection('saison2324').getFullList({
       filter: `href="${query.exhibit}"`,
       expand: "details,details.fee"
     });
 
-    exhibitDetails = exhibitDetails[0] || null;
-    exhibitDetails ? exhibitDetails.expand.details.sort((a, b) => new Date(a.time) - new Date(b.time)) : 1;
+    const exhibitDetails = exhibitDetailsArray[0] || null;
+    exhibitDetails ? exhibitDetails.expand?.details?.sort((a: any, b: any) => new Date(a.time).getTime() - new Date(b.time).getTime()) : 1;
 
-    return { props: { exhibitDetails } };
+    const endpoint = process.env.POCKETBASE_ENDPOINT!;
+
+    return { props: { exhibitDetails, endpoint } };
   } catch {
     return { notFound: true };
   }
