@@ -2,21 +2,32 @@ import React, { useState } from "react";
 import DefaultLayout from "@/layouts/default";
 import { Input, Textarea } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/modal";
 
-const ContactForm = ({ onSubmit }) => {
+interface ContactFormProps {
+  onSubmit: SubmitHandler<ContactFormData>;
+}
+
+interface ContactFormData {
+  name: string;
+  email: string;
+  subject?: string;
+  message: string;
+}
+
+const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<ContactFormData>({
     defaultValues: {
       email: '',
       name: '',
       subject: '',
-      message: ''
-    }
+      message: '',
+    },
   });
 
   return (
@@ -34,8 +45,8 @@ const ContactForm = ({ onSubmit }) => {
             required: "Le nom est obligatoire",
             pattern: {
               value: /^[\p{L}]+$/u,
-              message: "Le nom ne peut contenir que des lettres"
-            }
+              message: "Le nom ne peut contenir que des lettres",
+            },
           })}
         />
         {errors.name && <span className="text-sm text-red-500">{errors.name.message}</span>}
@@ -51,8 +62,8 @@ const ContactForm = ({ onSubmit }) => {
             required: "L'email est obligatoire",
             pattern: {
               value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-              message: "Veuillez présenter un email valide"
-            }
+              message: "Veuillez présenter un email valide",
+            },
           })}
         />
         {errors.email && <span className="text-sm text-red-500">{errors.email.message}</span>}
@@ -88,19 +99,27 @@ const ContactForm = ({ onSubmit }) => {
   );
 };
 
-const ContactModal = ({ isOpen, onOpenChange, formData }) => (
+interface ContactModalProps {
+  isOpen: boolean;
+  onOpenChange: (isOpen: boolean) => void;
+  formData: ContactFormData | null;
+}
+
+const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onOpenChange, formData }) => (
   <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
     <ModalContent>
       {(onClose) => (
         <>
-          <ModalHeader className="flex flex-col gap-1">C'est une démo. Voici vos infos :</ModalHeader>
+          <ModalHeader className="flex flex-col gap-1">
+            C'est une démo. Voici vos infos :
+          </ModalHeader>
           <ModalBody>
             {formData && (
               <div>
-                <p><strong>Nom :</strong> {formData.name.length > 30 ? formData.name.substring(0,30) + "..." : formData.name}</p>
-                <p><strong>Email :</strong> {formData.email.length > 60 ? formData.email.substring(0,60) + "..." : formData.email}</p>
-                {formData.subject && <p><strong>Sujet :</strong> {formData.subject.length > 30 ? formData.subject.substring(0,30) + "..." : formData.subject}</p>}
-                <p><strong>Message :</strong> {formData.message.length > 60 ? formData.message.substring(0,60) + "..." : formData.message}</p>
+                <p><strong>Nom :</strong>{" "}{formData.name.length > 30 ? formData.name.substring(0, 30) + "..." : formData.name}</p>
+                <p><strong>Email :</strong>{" "}{formData.email.length > 60 ? formData.email.substring(0, 60) + "..." : formData.email}</p>
+                {formData.subject && <p><strong>Sujet :</strong>{" "}{formData.subject.length > 30 ? formData.subject.substring(0, 30) + "..." : formData.subject}</p>}
+                <p><strong>Message :</strong>{" "}{formData.message.length > 60 ? formData.message.substring(0, 60) + "..." : formData.message}</p>
               </div>
             )}
           </ModalBody>
@@ -112,22 +131,18 @@ const ContactModal = ({ isOpen, onOpenChange, formData }) => (
 );
 
 export default function Contact() {
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState<ContactFormData | null>(null);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  const onSubmit = (data, e) => {
+  const onSubmit: SubmitHandler<ContactFormData> = (data, e) => {
     setFormData(data);
     onOpen();
-    e.target.reset();
+    e?.target.reset();
   };
 
   return (
     <DefaultLayout pageTitle="Contactez-Nous">
       <div className="grid lg:grid-cols-1 gap-4 py-8">
-        {/* <section className="order-2 lg:order-1">
-          lorem ipsum
-        </section> */}
-        {/* <section className="order-1 lg:order-2 w-full xl:w-2/3 xl:mx-auto"> */}
         <section className="w-full max-w-[600px] mx-auto">
           <ContactForm onSubmit={onSubmit} />
         </section>

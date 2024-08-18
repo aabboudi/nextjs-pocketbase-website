@@ -1,4 +1,9 @@
-import DefaultLayout from "@/layouts/default"
+import DefaultLayout from "@/layouts/default";
+import { ReactNode } from "react";
+
+type Props = {
+  children?: ReactNode;
+};
 
 export default function Custom404() {
   return (
