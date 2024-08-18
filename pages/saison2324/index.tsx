@@ -48,7 +48,7 @@ export default function Season2324({ exhibits, endpoint }: SeasonPageProps) {
                   </div>
                   <div className="col-span-1 lg:text-end">
                     <p className="text-tiny uppercase font-bold">{exhibit.category}</p>
-                    <small className="text-default-500">{formatDateRange(exhibit.expand?.details) || "Date Placeholder"}</small>
+                    <small className="text-default-500">{formatDateRange(exhibit?.expand?.details || []) || "Date Placeholder"}</small>
                   </div>
                 </CardHeader>
                 <CardBody className="overflow-hidden py-2 flex justify-center items-center">

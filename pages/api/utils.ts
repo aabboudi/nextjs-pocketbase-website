@@ -15,14 +15,14 @@ function formatDate(dateString: string): [string, string] {
   return [formattedDate, formattedTime];
 }
 
-interface Event {
+interface EventTime {
   time: string;
 }
 
-function formatDateRange(events: Event[]): string {
+function formatDateRange(events: EventTime[]): string {
   try {
     if (!Array.isArray(events) || events.length === 0) {
-      throw new Error("Events array is empty or not an array");
+      return "Date à déterminer";
     }
 
     events.sort((a, b) => {
@@ -55,7 +55,7 @@ function formatDateRange(events: Event[]): string {
     }
 
     return `${firstDate} - ${lastDate}`;
-  } catch (error) {
+  } catch (error: any) {
     return "Date à détérminer";
   }
 }
